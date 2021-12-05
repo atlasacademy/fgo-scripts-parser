@@ -10,7 +10,8 @@
 import yargs from 'yargs';
 import { existsSync, mkdirSync, statSync, accessSync, constants, readdirSync, readFileSync, writeFileSync } from 'fs';
 import { join, basename, extname } from 'path';
-import parse, { Region } from './parseScript'
+import { Region } from './utils';
+import { parseScript } from './parseScript'
 
 const argv = yargs
     .option('region', {
@@ -50,7 +51,7 @@ for (let entry of readdirSync(argv.path)) {
     if (extname(entry).toLowerCase() != '.txt') continue;
 
     console.log(`Reading file ${entry}`);
-    let parsed = parse(region, readFileSync(fullPath, 'utf-8'));
+    let parsed = parseScript(region, readFileSync(fullPath, 'utf-8'));
 
     let filename = basename(entry) + '.json';
     console.log(`Writing file ${filename}`);
